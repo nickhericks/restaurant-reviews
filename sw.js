@@ -57,10 +57,35 @@ self.addEventListener('activate', function(event) {
  * Upon fetch request, first request from cache
  */
 self.addEventListener('fetch', function(event) {
-  console.log(event.request.url);
   event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || fetch(event.request);
-    })
-  );
+    caches.match(event.request)
+      .then(function(response) {
+        if (response) {
+          console.log('Cache hit - return response');
+        return response;
+        }
+
+        var fetchRequest = event.request.clone();
+
+        return fetch(fetchRequest).then(
+          function(response) {
+            console.log('Checking if valid response was received');
+            if(!response || response.status !== 200 || response.type !== 'basic') {
+              console.log('Valid response received and cloned');
+              return response;
+            }
+
+            var responseToCache = response.clone();
+
+            caches.open(staticCacheName)
+              .then(function(cache) {
+                console.log('Adding cloned response to cache');
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          }
+        );
+      })
+    );
 });
