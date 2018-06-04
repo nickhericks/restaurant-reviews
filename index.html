@@ -21,8 +21,8 @@
 
     <main id="maincontent">
       <!-- MAP SECTION -->
-      <section id="map-container">
-        <div id="map" tabindex="0" role="application" aria-label="Map with restaurants"></div>
+      <section id="map-container" tabindex="-1">
+        <div id="map" role="application" aria-label="Map with restaurants"></div>
       </section>
 
       <!-- DETAILS SECTION -->
@@ -31,11 +31,11 @@
         <div class="filter-options">
           <h2>Filter Results</h2>
 
-          <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label="All Neighborhoods">
+          <select id="neighborhoods-select" tabindex="0" name="neighborhoods" onchange="updateRestaurants()" aria-label="All Neighborhoods">
             <option value="all">All Neighborhoods</option>
           </select>
 
-          <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-label="All Cuisines">
+          <select id="cuisines-select" tabindex="0" name="cuisines" onchange="updateRestaurants()" aria-label="All Cuisines">
             <option value="all">All Cuisines</option>
           </select>
 
